@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: アイデア・メモはこちら
+    url: https://github.com/h-otk/h-otk.github.io/issues/new?template=05_idea.yml
+    about: すぐ着手しないアイデアや思いついたことはこちら
