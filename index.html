@@ -3,221 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page</title>
+  <title>Test Page — h-otk.github.io</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --color-bg: #0f172a;
-      --color-surface: #1e293b;
-      --color-border: #334155;
-      --color-primary: #38bdf8;
-      --color-accent: #818cf8;
-      --color-text: #e2e8f0;
-      --color-muted: #94a3b8;
-      --radius: 12px;
-      --transition: 0.3s ease;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--color-bg);
-      color: var(--color-text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── Header ── */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 2rem;
-      border-bottom: 1px solid var(--color-border);
-      position: sticky;
-      top: 0;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-    }
-
-    header .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--color-primary);
-      letter-spacing: 0.05em;
-    }
-
-    header nav a {
-      color: var(--color-muted);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.875rem;
-      transition: color var(--transition);
-    }
-
-    header nav a:hover {
-      color: var(--color-text);
-    }
-
-    /* ── Main ── */
-    main {
-      flex: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      width: 100%;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 5rem 0 4rem;
-    }
-
-    .hero .badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: var(--color-primary);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.25rem;
-      min-height: 1.4em;
-    }
-
-    .hero h1 .cursor {
-      display: inline-block;
-      width: 3px;
-      height: 0.9em;
-      background: var(--color-primary);
-      margin-left: 2px;
-      vertical-align: middle;
-      animation: blink 0.8s step-end infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-
-    .hero p {
-      color: var(--color-muted);
-      font-size: 1.1rem;
-      max-width: 480px;
-      margin: 0 auto 2rem;
-      line-height: 1.7;
-    }
-
-    /* ── Clock ── */
-    .clock-section {
-      text-align: center;
-      margin: 0 0 4rem;
-    }
-
-    .clock-section h2 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--color-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    #clock {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 700;
-      color: var(--color-accent);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.05em;
-    }
-
-    /* ── Cards ── */
-    .info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      padding: 1.75rem 1.5rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease, border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .card:hover {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
-    }
-
-    .card .icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--color-text);
-    }
-
-    .card p {
-      font-size: 0.875rem;
-      color: var(--color-muted);
-      line-height: 1.6;
-    }
-
-    .card:nth-child(2) { transition-delay: 0.1s; }
-    .card:nth-child(3) { transition-delay: 0.2s; }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 1.5rem 2rem;
-      border-top: 1px solid var(--color-border);
-      color: var(--color-muted);
-      font-size: 0.8rem;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 480px) {
-      header { padding: 1rem; }
-      header nav a { margin-left: 1rem; }
-      main { padding: 3rem 1.25rem; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
-    <span class="logo">h-otk.github.io</span>
+    <a class="logo" href="/">h-otk</a>
     <nav>
       <a href="#">Home</a>
       <a href="#">About</a>
@@ -228,29 +23,26 @@
   <main>
 
     <section class="hero">
-      <div class="badge">Test Page</div>
-      <h1 id="typing-target"><span class="cursor"></span></h1>
-      <p>HTML・CSS・JavaScript を使って構築したテストページです。</p>
+      <p class="label">Test Page</p>
+      <h1 id="typing-target"></h1>
+      <p class="sub">HTML・CSS・JavaScript を使って構築したテストページです。</p>
     </section>
 
     <section class="clock-section">
-      <h2>Current Time</h2>
+      <p class="label">Current Time</p>
       <div id="clock">--:--:--</div>
     </section>
 
     <section class="info">
       <div class="card">
-        <div class="icon">🏗️</div>
         <h3>HTML</h3>
         <p>セマンティックなマークアップで、意味のある構造を表現しています。</p>
       </div>
       <div class="card">
-        <div class="icon">🎨</div>
         <h3>CSS</h3>
         <p>カスタムプロパティ・Flexbox・Gridを活用し、レスポンシブに対応しています。</p>
       </div>
       <div class="card">
-        <div class="icon">⚡</div>
         <h3>JavaScript</h3>
         <p>タイピングアニメーション、時計、スクロールフェードインを実装しています。</p>
       </div>
@@ -263,64 +55,45 @@
   </footer>
 
   <script>
-    // Typing animation
+    // タイピングアニメーション（textContent で操作、カーソルは CSS ::after）
+    const el = document.getElementById('typing-target');
     const phrases = ['Hello, World!', 'Welcome to My Page.', 'Built with HTML, CSS & JS.'];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    const target = document.getElementById('typing-target');
-    const cursor = target.querySelector('.cursor');
+    let pi = 0, ci = 0, del = false;
 
     function type() {
-      const phrase = phrases[phraseIndex];
-      const displayed = isDeleting
-        ? phrase.slice(0, charIndex - 1)
-        : phrase.slice(0, charIndex + 1);
+      const p = phrases[pi];
+      el.textContent = del ? p.slice(0, --ci) : p.slice(0, ++ci);
 
-      target.childNodes[0]?.remove?.();
-      target.insertBefore(document.createTextNode(displayed), cursor);
-
-      if (!isDeleting && displayed === phrase) {
-        charIndex = phrase.length;
-        setTimeout(() => { isDeleting = true; type(); }, 1800);
-        return;
+      if (!del && ci === p.length) {
+        del = true;
+        return setTimeout(type, 1800);
       }
-      if (isDeleting && displayed === '') {
-        isDeleting = false;
-        charIndex = 0;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        setTimeout(type, 400);
-        return;
+      if (del && ci === 0) {
+        del = false;
+        pi = (pi + 1) % phrases.length;
+        return setTimeout(type, 400);
       }
-
-      charIndex += isDeleting ? -1 : 1;
-      setTimeout(type, isDeleting ? 50 : 90);
+      setTimeout(type, del ? 50 : 90);
     }
-
     type();
 
-    // Real-time clock
-    function updateClock() {
-      const now = new Date();
-      const pad = n => String(n).padStart(2, '0');
+    // 時計
+    function tick() {
+      const n = new Date();
+      const p = v => String(v).padStart(2, '0');
       document.getElementById('clock').textContent =
-        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
     }
-    updateClock();
-    setInterval(updateClock, 1000);
+    tick();
+    setInterval(tick, 1000);
 
-    // Scroll fade-in
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+    // スクロールフェードイン
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
       });
     }, { threshold: 0.15 });
-
-    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+    document.querySelectorAll('.card').forEach(c => obs.observe(c));
   </script>
 
 </body>
