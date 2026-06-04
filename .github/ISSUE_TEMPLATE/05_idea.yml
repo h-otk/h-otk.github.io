@@ -1,0 +1,16 @@
+name: アイデア・メモ
+description: すぐ着手しないが記録しておきたいこと
+title: "[アイデア] "
+labels: ["アイデア"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: 内容
+      description: 思いついたこと、やってみたいことを自由に
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足・参考
