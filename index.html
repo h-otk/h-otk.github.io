@@ -24,7 +24,7 @@
 
     <section class="hero">
       <p class="label">Test Page</p>
-      <h1 id="typing-target"></h1>
+      <h1 id="typing-target">Hello, World!</h1>
       <p class="sub">HTML・CSS・JavaScript を使って構築したテストページです。</p>
     </section>
 
@@ -55,28 +55,6 @@
   </footer>
 
   <script>
-    // タイピングアニメーション（textContent で操作、カーソルは CSS ::after）
-    const el = document.getElementById('typing-target');
-    const phrases = ['Hello, World!', 'Welcome to My Page.', 'Built with HTML, CSS & JS.'];
-    let pi = 0, ci = 0, del = false;
-
-    function type() {
-      const p = phrases[pi];
-      el.textContent = del ? p.slice(0, --ci) : p.slice(0, ++ci);
-
-      if (!del && ci === p.length) {
-        del = true;
-        return setTimeout(type, 1800);
-      }
-      if (del && ci === 0) {
-        del = false;
-        pi = (pi + 1) % phrases.length;
-        return setTimeout(type, 400);
-      }
-      setTimeout(type, del ? 50 : 90);
-    }
-    type();
-
     // 時計
     function tick() {
       const n = new Date();
