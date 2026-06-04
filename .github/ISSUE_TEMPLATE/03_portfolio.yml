@@ -1,0 +1,39 @@
+name: 成果物追加
+description: ポートフォリオに作品・実績を追加する
+title: "[成果物] "
+labels: ["成果物追加"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 作品名・タイトル
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - Webサイト
+        - アプリ
+        - デザイン
+        - その他
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 概要
+      description: どんな作品か、使用技術など
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL・リンク
+      description: 作品のリンクがあれば
+  - type: textarea
+    id: notes
+    attributes:
+      label: 補足
+      description: 掲載にあたって注意点など

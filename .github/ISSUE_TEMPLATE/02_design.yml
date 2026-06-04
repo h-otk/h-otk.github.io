@@ -1,0 +1,24 @@
+name: デザイン改善
+description: 見た目・レイアウトの改善
+title: "[デザイン] "
+labels: ["デザイン"]
+body:
+  - type: textarea
+    id: current
+    attributes:
+      label: 現状
+      description: 今どうなっているか
+    validations:
+      required: true
+  - type: textarea
+    id: ideal
+    attributes:
+      label: 理想の状態
+      description: どうしたいか
+    validations:
+      required: true
+  - type: textarea
+    id: reference
+    attributes:
+      label: 参考・メモ
+      description: 参考サイト、色指定、イメージなど
