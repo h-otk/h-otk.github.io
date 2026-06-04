@@ -3,77 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page — h-otk.github.io</title>
+  <title>h-otk</title>
+  <meta name="google-site-verification" content="5u6kIAX5z88EovOxOQBiKOzhCk3DL9Nc8gfqg3y7vak" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <meta name="google-site-verification" content="5u6kIAX5z88EovOxOQBiKOzhCk3DL9Nc8gfqg3y7vak" />
 </head>
 <body>
 
   <header>
     <a class="logo" href="/">h-otk</a>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Works</a>
+      <a href="/" class="active">Home</a>
+      <a href="works.html">Works</a>
     </nav>
   </header>
 
   <main>
 
     <section class="hero">
-      <p class="label">Test Page</p>
-      <h1 id="typing-target">Hello, World!</h1>
-      <p class="sub">HTML・CSS・JavaScript を使って構築したテストページです。</p>
+      <p class="hero-name">h-otk</p>
+      <p class="hero-bio">滋賀県在住。日々の業務改善・自動化を趣味として取り組んでいます。<!-- 自己紹介を追記 --></p>
     </section>
 
-    <section class="clock-section">
-      <p class="label">Current Time</p>
-      <div id="clock">--:--:--</div>
+    <section>
+      <h2>About</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p><!-- 詳細な自己紹介を追記 --></p>
+        </div>
+        <div class="about-skills">
+          <div class="skill-group">
+            <h3>Languages &amp; Frameworks</h3>
+            <ul class="skill-list">
+              <li>HTML / CSS</li>
+              <li>JavaScript</li>
+              <li>Python</li>
+              <li>Flask</li>
+              <li>VBA</li>
+              <li>GAS</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Tools</h3>
+            <ul class="skill-list">
+              <li>VS Code</li>
+              <li>GitHub</li>
+              <li>SQLite</li>
+              <li>Postman</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="info">
-      <div class="card">
-        <h3>HTML</h3>
-        <p>セマンティックなマークアップで、意味のある構造を表現しています。</p>
+    <section>
+      <div class="section-header">
+        <h2>Works</h2>
+        <a class="link-arrow" href="works.html">すべて見る →</a>
       </div>
-      <div class="card">
-        <h3>CSS</h3>
-        <p>カスタムプロパティ・Flexbox・Gridを活用し、レスポンシブに対応しています。</p>
-      </div>
-      <div class="card">
-        <h3>JavaScript</h3>
-        <p>タイピングアニメーション、時計、スクロールフェードインを実装しています。</p>
+      <div class="works-grid">
+        <div class="work-card" data-tags="python,tool">
+          <div class="work-image">画像未設定</div>
+          <h3>作品名</h3>
+          <p>作品の説明テキスト</p>
+          <div class="work-tags"><span class="tag">Python</span><span class="tag">ツール</span></div>
+        </div>
+        <div class="work-card" data-tags="excel,vba">
+          <div class="work-image">画像未設定</div>
+          <h3>作品名</h3>
+          <p>作品の説明テキスト</p>
+          <div class="work-tags"><span class="tag">Excel</span><span class="tag">VBA</span></div>
+        </div>
+        <div class="work-card" data-tags="web">
+          <div class="work-image">画像未設定</div>
+          <h3>作品名</h3>
+          <p>作品の説明テキスト</p>
+          <div class="work-tags"><span class="tag">Web</span></div>
+        </div>
       </div>
     </section>
 
   </main>
 
   <footer>
-    <p>&copy; 2026 h-otk. All rights reserved.</p>
+    <p>&copy; 2026 h-otk.</p>
   </footer>
-
-  <script>
-    // 時計
-    function tick() {
-      const n = new Date();
-      const p = v => String(v).padStart(2, '0');
-      document.getElementById('clock').textContent =
-        `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
-    }
-    tick();
-    setInterval(tick, 1000);
-
-    // スクロールフェードイン
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.card').forEach(c => obs.observe(c));
-  </script>
 
 </body>
 </html>
