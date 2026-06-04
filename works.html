@@ -81,15 +81,15 @@
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.work-card');
 
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
 
-        const f = btn.dataset.filter;
-        cards.forEach(card => {
-          const tags = (card.dataset.tags || '').split(',');
-          card.classList.toggle('hidden', f !== 'all' && !tags.includes(f));
+        var f = btn.getAttribute('data-filter');
+        cards.forEach(function(card) {
+          var tags = (card.getAttribute('data-tags') || '').split(',');
+          card.style.display = (f === 'all' || tags.indexOf(f) !== -1) ? '' : 'none';
         });
       });
     });
