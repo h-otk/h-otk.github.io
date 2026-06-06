@@ -149,6 +149,42 @@ h2 {
   border-radius: 3px;
 }
 
+/* ── Timeline (My Background) ── */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.timeline-year {
+  font-size: 0.75rem;
+  color: var(--muted);
+  padding-top: 0.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-org {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.timeline-detail {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0.15rem 0 0;
+}
+
 /* ── Works grid ── */
 .works-grid {
   display: grid;
@@ -272,4 +308,5 @@ footer {
   header, main { padding-left: 1.25rem; padding-right: 1.25rem; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   main { padding-top: 2.5rem; }
+  .timeline-item { grid-template-columns: 2.5rem 1fr; gap: 0.75rem; }
 }
