@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTPS Web API 限界突破テンプレート</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background: #f5f5f5; color: #333; }
+        h1 { font-size: 1.5rem; text-align: center; }
+        .card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { font-size: 1.1rem; margin-top: 0; color: #007aff; border-bottom: 2px solid #007aff; padding-bottom: 5px; }
+        button { background: #007aff; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 5px; }
+        button:active { background: #0051a8; }
+        .output { background: #eee; padding: 10px; margin-top: 10px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; word-break: break-all; max-height: 150px; overflow-y: auto; }
+        video { width: 100%; max-height: 200px; background: #000; margin-top: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1>HTTPS Web API テンプレート</h1>
+
+    <!-- 1. カメラ・ファイル（インライン起動） -->
+    <div class="card">
+        <h2>① カメラ起動（OS標準カメラ連動）</h2>
+        <p>既存のカメラアプリを起動し、撮影後にブラウザへ戻します。</p>
+        <input type="file" accept="image/*" capture="environment" id="camera-file">
+    </div>
+
+    <!-- 2. カメラストリーム（リアルタイム映像取得） -->
+    <div class="card">
+        <h2>② カメラストリーム（生映像・マイク）</h2>
+        <p>ブラウザ内にリアルタイム映像を描画します（ARやQR読取の基盤）。</p>
+        <button onclick="startStream()">カメラ映像を開始</button>
+        <video id="video-stream" autoplay playsinline muted></video>
+        <div class="output" id="out-stream">ここに状態が表示されます</div>
+    </div>
+
+    <!-- 3. 高精度位置情報（GPS） -->
+    <div class="card">
+        <h2>③ 高精度GPS（位置情報取得）</h2>
+        <p>端末のGPSから正確な緯度・経度、移動速度を取得します。</p>
+        <button onclick="getGPS()">現在地を取得</button>
+        <div class="output" id="out-gps">ここに位置情報が表示されます</div>
+    </div>
+
+    <!-- 4. 各種物理センサー（加速度・ジャイロ・方位） -->
+    <div class="card">
+        <h2>④ 物理センサー（ジャイロ・加速度）</h2>
+        <p>スマホの傾きや、振った衝撃を検知します（iOSはユーザー許可必須）。</p>
+        <button onclick="startSensors()">センサーを有効化</button>
+        <div class="output" id="out-sensor">ここに傾きが表示されます</div>
+    </div>
+
+    <!-- 5. 端末バイブレーション（Android専用） -->
+    <div class="card">
+        <h2>⑤ バイブレーション（※Androidのみ）</h2>
+        <p>指定したパターン（例: 200ms振動→100ms停止→200ms振動）で震わせます。</p>
+        <button onclick="vibrate()">スマホを振動させる</button>
+    </div>
+
+    <!-- 6. 音声合成（Text-to-Speech） -->
+    <div class="card">
+        <h2>⑥ 音声合成（文字読み上げ）</h2>
+        <p>端末に内蔵されている音声エンジンを使って、テキストを流暢に喋らせます。</p>
+        <button onclick="speak()">「業務を完了しました」と喋る</button>
+    </div>
+
+    <!-- 7. バッテリー情報（Android/Chrome専用） -->
+    <div class="card">
+        <h2>⑦ バッテリー状態（※Chrome系のみ）</h2>
+        <p>現在の残量や、充電中かどうかをリアルタイムに監視します。</p>
+        <button onclick="getBattery()">バッテリー情報を取得</button>
+        <div class="output" id="out-battery">ここに残量が表示されます</div>
+    </div>
+
+    <!-- 8. Web Share API（OS標準シェア画面） -->
+    <div class="card">
+        <h2>⑧ OS標準シェア機能の呼び出し</h2>
+        <p>ブラウザから、スマホ標準の共有メニュー（LINEやAirDropなど）を開きます。</p>
+        <button onclick="shareLink()">このページをシェア</button>
+    </div>
+
+    <script>
+        // ② カメラストリーム
+        async function startStream() {
+            const out = document.getElementById('out-stream');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+                document.getElementById('video-stream').srcObject = stream;
+                out.textContent = "ストリーム接続成功（背面カメラ）";
+            } catch (err) {
+                out.textContent = "エラー: " + err.message;
+            }
+        }
+
+        // ③ 高精度GPS
+        function getGPS() {
+            const out = document.getElementById('out-gps');
+            if (!navigator.geolocation) {
+                out.textContent = "このブラウザはGPSに未対応です";
+                return;
+            }
+            out.textContent = "位置情報を測定中...";
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    out.textContent = `緯度: ${pos.coords.latitude}\n経度: ${pos.coords.longitude}\n精度: ±${pos.coords.accuracy}m`;
+                },
+                (err) => { out.textContent = "エラー(" + err.code + "): " + err.message; },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+        }
+
+        // ④ 物理センサー
+        async function startSensors() {
+            const out = document.getElementById('out-sensor');
+            // iOS 13+ のためのアクセス許可要求
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                try {
+                    const permission = await DeviceOrientationEvent.requestPermission();
+                    if (permission === 'granted') {
+                        initSensorListener();
+                    } else { out.textContent = "許可が拒否されました"; }
+                } catch (err) { out.textContent = "エラー: " + err.message; }
+            } else {
+                // Androidや古いiOSはそのまま実行
+                initSensorListener();
+            }
+        }
+
+        function initSensorListener() {
+            const out = document.getElementById('out-sensor');
+            window.addEventListener('deviceorientation', (event) => {
+                out.textContent = `左右の傾き(gamma): ${Math.round(event.gamma)}°\n前後の傾き(beta): ${Math.round(event.beta)}°\n方角(alpha): ${Math.round(event.alpha)}°`;
+            });
+        }
+
+        // ⑤ バイブレーション
+        function vibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]); // 振動-休憩-振動
+            } else {
+                alert("このブラウザ/OSはバイブレーションに対応していません（iOS不可）");
+            }
+        }
+
+        // ⑥ 音声合成
+        function speak() {
+            if ('speechSynthesis' in window) {
+                const uttr = new SpeechSynthesisUtterance("業務を完了しました。データを送信します。");
+                uttr.lang = "ja-JP";
+                window.speechSynthesis.speak(uttr);
+            } else {
+                alert("音声合成に対応していません");
+            }
+        }
+
+        // ⑦ バッテリー情報
+        async function getBattery() {
+            const out = document.getElementById('out-battery');
+            if (navigator.getBattery) {
+                const battery = await navigator.getBattery();
+                out.textContent = `充電中: ${battery.charging ? 'はい' : 'いいえ'}\n残量: ${battery.level * 100}%`;
+            } else {
+                out.textContent = "このブラウザはバッテリーAPIに対応していません（iOS Safari等不可）";
+            }
+        }
+
+        // ⑧ OS標準シェア
+        async function shareLink() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'HTTPS限界テンプレート',
+                        text: 'ブラウザ標準機能のテストページです。',
+                        url: window.location.href
+                    });
+                } catch (err) { console.log("シェアキャンセル、またはエラー"); }
+            } else {
+                alert("このブラウザはWeb Share APIに対応していません");
+            }
+        }
+    </script>
+</body>
+</html>
