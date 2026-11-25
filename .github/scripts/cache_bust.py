@@ -5,15 +5,19 @@
   python3 .github/scripts/cache_bust.py --check  # 参照先ファイルの存在確認のみ（書き換えなし）
 
 HTML と画像は対象外。外部 URL（http:// / https:// / //）も対象外。
+JS から読み込む themes/・config/ のファイルは static/versions.js にハッシュ表を書き出して対応する。
 """
 
 import hashlib
+import json
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXCLUDE_DIRS = {".git", "node_modules"}
+DYNAMIC_DIRS = ["themes", "config"]
+VERSIONS_JS = ROOT / "static" / "versions.js"
 
 # href="xxx.css" / src="xxx.js"（?v=... の有無を問わない）
 PATTERN = re.compile(
@@ -33,9 +37,28 @@ def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:8]
 
 
+def write_versions_js() -> None:
+    """JS から動的に読み込むファイル（テーマ CSS・設定 JSON）のハッシュ表を static/versions.js に書き出す。"""
+    versions = {}
+    for folder in DYNAMIC_DIRS:
+        for path in sorted((ROOT / folder).rglob("*")):
+            if path.is_file() and path.suffix in {".css", ".js", ".json"}:
+                versions[path.relative_to(ROOT).as_posix()] = file_hash(path)
+    VERSIONS_JS.write_text(
+        "// デプロイ時に .github/scripts/cache_bust.py が自動生成します（手で編集しないでください）\n"
+        f"window.ASSET_VERSIONS = {json.dumps(versions, ensure_ascii=False, indent=2)};\n",
+        encoding="utf-8",
+    )
+    print(f"更新: {VERSIONS_JS.relative_to(ROOT)}（{len(versions)} 件）")
+
+
 def main() -> int:
     check_only = "--check" in sys.argv
     errors = []
+
+    # versions.js を先に作る（その後 HTML 側の ?v= に versions.js 自体のハッシュが入る）
+    if not check_only:
+        write_versions_js()
 
     for html_file in sorted(ROOT.rglob("*.html")):
         if EXCLUDE_DIRS & set(html_file.relative_to(ROOT).parts):

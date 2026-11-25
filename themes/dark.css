@@ -1,0 +1,23 @@
+/*
+  テーマ: dark（黒基調。イラストが映えるよう画像のみ表示）
+*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --border: #2e2e2e;
+  --text: #ececec;
+  --muted: #9a9a9a;
+  --accent: #f0c36a;
+  --on-accent: #121212;
+  --card-bg: #181818;
+  --header-bg: rgb(18 18 18 / 90%);
+  --font: "Inter", -apple-system, blinkmacsystemfont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --radius: 6px;
+  --radius-sm: 4px;
+  --gallery-min: 220px;
+  --gallery-gap: 0.5rem;
+  --gallery-layout: grid;
+  --gallery-style: image;
+}

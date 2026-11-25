@@ -1,0 +1,35 @@
+/*
+  テーマ: material（Material Design 3 風）
+  配色は M3 のベースライン（primary #6750A4 系）を参考にしている。
+*/
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+:root {
+  --bg: #fffbfe;
+  --surface: #f3edf7;
+  --border: #cac4d0;
+  --text: #1c1b1f;
+  --muted: #49454f;
+  --accent: #6750a4;
+  --on-accent: #ffffff;
+  --chip-active-bg: #e8def8;
+  --chip-active-text: #1d192b;
+  --header-bg: #f3edf7;
+  --header-border: transparent;
+  --card-bg: #fffbfe;
+  --card-border: none;
+  --font: "Roboto", "Noto Sans JP", sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%);
+  --shadow-hover: 0 1px 2px rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%);
+  --gallery-layout: grid;
+  --gallery-style: card;
+}
+
+/* M3 は見出しを大文字化しない */
+h2 { text-transform: none; letter-spacing: 0.01em; font-size: 0.9rem; color: var(--accent); }
+.filter-btn { border-radius: 8px; }
+.filter-btn.active { font-weight: 700; }
+.skill-list li, .tag { border-radius: 8px; }
+.lightbox { border-radius: 28px; }

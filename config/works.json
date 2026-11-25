@@ -1,0 +1,65 @@
+{
+  "_説明": "作品一覧。作品を増やすときは { から } までを丸ごとコピーして、カンマ(,)で区切って下に貼り付け、中身を書き換えます。画像は img/works/ に置き、image にそのパスを書きます。上にある作品ほど先に表示されます。",
+  "_項目の意味": {
+    "title": "作品名（必須）",
+    "image": "画像のパス 例: img/works/sample.jpg （空欄なら「画像未設定」と表示）",
+    "thumbnail": "一覧用の小さい画像（省略可。省略すると image を使う）",
+    "description": "説明文。改行したいところに \\n と書く",
+    "tags": "分類。[\"Python\", \"ツール\"] のように書く",
+    "date": "制作日 例: 2026-11-25（省略可）",
+    "link": "関連URL（省略可）"
+  },
+
+  "filters": ["Excel", "VBA", "Python", "Web", "GAS", "ツール"],
+
+  "works": [
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["Excel", "VBA", "ツール"],
+      "date": "",
+      "link": ""
+    },
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["Python", "ツール"],
+      "date": "",
+      "link": ""
+    },
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["GAS"],
+      "date": "",
+      "link": ""
+    },
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["Web"],
+      "date": "",
+      "link": ""
+    },
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["Python", "GAS"],
+      "date": "",
+      "link": ""
+    },
+    {
+      "title": "作品名",
+      "image": "",
+      "description": "作品の説明テキスト",
+      "tags": ["Excel"],
+      "date": "",
+      "link": ""
+    }
+  ]
+}
