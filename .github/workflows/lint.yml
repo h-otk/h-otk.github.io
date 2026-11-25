@@ -15,7 +15,7 @@ jobs:
           node-version: '20'
 
       - name: 依存パッケージをインストール
-        run: npm install --save-dev htmlhint stylelint stylelint-config-standard
+        run: npm install --no-save htmlhint@1 stylelint@16 stylelint-config-standard@36 # バージョン固定（新版でルールが変わり結果がぶれるのを防ぐ）
 
       - name: HTMLHint
         run: npx htmlhint --config .htmlhintrc index.html works.html
