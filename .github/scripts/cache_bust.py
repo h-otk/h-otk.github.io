@@ -5,7 +5,7 @@
   python3 .github/scripts/cache_bust.py --check  # 参照先ファイルの存在確認のみ（書き換えなし）
 
 HTML と画像は対象外。外部 URL（http:// / https:// / //）も対象外。
-JS から読み込む themes/・config/ のファイルは static/versions.js にハッシュ表を書き出して対応する。
+JS から読み込むテーマ・設定・生成データは assets/js/versions.js にハッシュ表を書き出して対応する。
 """
 
 import hashlib
@@ -16,8 +16,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 EXCLUDE_DIRS = {".git", "node_modules"}
-DYNAMIC_DIRS = ["themes", "config"]
-VERSIONS_JS = ROOT / "static" / "versions.js"
+DYNAMIC_PATHS = ["assets/css/themes", "assets/data", "assets/img", "content/site.json"]
+VERSIONS_JS = ROOT / "assets" / "js" / "versions.js"
 
 # href="xxx.css" / src="xxx.js"（?v=... の有無を問わない）
 PATTERN = re.compile(
@@ -38,11 +38,13 @@ def file_hash(path: Path) -> str:
 
 
 def write_versions_js() -> None:
-    """JS から動的に読み込むファイル（テーマ CSS・設定 JSON）のハッシュ表を static/versions.js に書き出す。"""
+    """JS から動的に読み込むファイル（テーマ CSS・設定 JSON 等）のハッシュ表を assets/js/versions.js に書き出す。"""
     versions = {}
-    for folder in DYNAMIC_DIRS:
-        for path in sorted((ROOT / folder).rglob("*")):
-            if path.is_file() and path.suffix in {".css", ".js", ".json"}:
+    for entry in DYNAMIC_PATHS:
+        target = ROOT / entry
+        paths = [target] if target.is_file() else sorted(target.rglob("*"))
+        for path in paths:
+            if path.is_file() and path.suffix in {".css", ".js", ".json", ".svg"}:
                 versions[path.relative_to(ROOT).as_posix()] = file_hash(path)
     VERSIONS_JS.write_text(
         "// デプロイ時に .github/scripts/cache_bust.py が自動生成します（手で編集しないでください）\n"

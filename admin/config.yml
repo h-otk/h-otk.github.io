@@ -1,0 +1,164 @@
+# 管理画面（Sveltia CMS）の設定
+# 別リポジトリで使うときは repo を「ユーザー名/リポジトリ名」に変えてください。
+backend:
+  name: github
+  repo: h-otk/h-otk.github.io
+  branch: main
+  # 自分のサーバで GitHub ログイン（OAuth）を中継する場合はその URL を書く。
+  # 書かない場合は「アクセストークンでサインイン」を使う。
+  # base_url: https://example.com/cms-auth
+
+media_folder: content/images
+public_folder: /content/images
+
+collections:
+  - name: works
+    label: 作品
+    label_singular: 作品
+    folder: content/works
+    path: "{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    create: true
+    slug: "{{fields.slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: slug, label: "フォルダ名（URL。半角小文字・数字・ハイフン）", widget: string, pattern: ["^[a-z0-9][a-z0-9-]*$", "半角小文字・数字・ハイフンのみ"] }
+      - { name: title, label: 作品名, widget: string }
+      - { name: date, label: 制作日, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { name: tags, label: タグ, widget: list, required: false }
+      - { name: image, label: メイン画像, widget: image, required: false }
+      - { name: thumbnail, label: 一覧用の小さい画像（省略可）, widget: image, required: false }
+      - { name: images, label: 追加画像, widget: list, field: { name: image, label: 画像, widget: image }, required: false }
+      - { name: summary, label: 一覧に出す短い説明, widget: text, required: false }
+      - { name: link, label: 関連URL, widget: string, required: false }
+      - { name: order, label: 並び順（大きいほど先頭）, widget: number, default: 0, required: false }
+      - { name: draft, label: 下書き（非公開）, widget: boolean, default: false, required: false }
+      - { name: body, label: 本文, widget: markdown, required: false }
+
+  - name: news
+    label: 更新履歴
+    label_singular: お知らせ
+    folder: content/news
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date]
+    fields:
+      - { name: title, label: タイトル, widget: string }
+      - { name: date, label: 日付, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { name: body, label: 本文, widget: markdown, required: false }
+
+  - name: pages
+    label: 固定ページ
+    files:
+      - { name: terms, label: 利用規約, file: content/pages/terms.md, fields: &page_fields [ { name: title, label: タイトル, widget: string }, { name: updated, label: 最終更新日, widget: datetime, time_format: false, format: "YYYY-MM-DD" }, { name: body, label: 本文, widget: markdown } ] }
+      - { name: privacy, label: プライバシーポリシー, file: content/pages/privacy.md, fields: *page_fields }
+      - { name: contact, label: お問い合わせ, file: content/pages/contact.md, fields: *page_fields }
+      - { name: commission, label: ご依頼について, file: content/pages/commission.md, fields: *page_fields }
+
+  - name: settings
+    label: サイト設定
+    files:
+      - name: site
+        label: サイト設定（site.json）
+        file: content/site.json
+        format: json
+        fields:
+          - name: site
+            label: サイト
+            widget: object
+            fields:
+              - { name: title, label: サイト名, widget: string }
+              - { name: description, label: 説明文, widget: string, required: false }
+              - { name: copyright, label: 著作権表示, widget: string }
+              - { name: favicon, label: ファビコン, widget: string }
+          - name: theme
+            label: テーマ
+            widget: object
+            fields:
+              - { name: name, label: 使用するテーマ, widget: select, options: [minimal, dark, pastel, material] }
+              - { name: allowSwitch, label: 閲覧者のテーマ切替を許可, widget: boolean }
+              - { name: choices, label: 切替候補, widget: list, fields: [ { name: name, label: テーマ名, widget: string }, { name: label, label: 表示名, widget: string } ] }
+              - name: override
+                label: 部分上書き
+                widget: object
+                fields:
+                  - { name: accent, label: "アクセント色（例 #e87a90）", widget: string, required: false }
+                  - { name: background, label: 背景色, widget: string, required: false }
+                  - { name: text, label: 文字色, widget: string, required: false }
+                  - { name: backgroundImage, label: 背景画像, widget: image, required: false }
+                  - { name: font, label: フォント, widget: string, required: false }
+          - { name: nav, label: メニュー, widget: list, fields: [ { name: label, label: 表示名, widget: string }, { name: href, label: リンク先, widget: string } ] }
+          - name: profile
+            label: プロフィール
+            widget: object
+            fields:
+              - { name: name, label: 名前, widget: string }
+              - { name: avatar, label: アイコン画像, widget: image, required: false }
+              - { name: bio, label: 自己紹介（1行ずつ）, widget: list }
+          - name: links
+            label: 外部リンク
+            widget: object
+            fields:
+              - { name: referrer, label: リファラー送出, widget: select, options: [ { label: 送らない, value: none }, { label: ドメインのみ, value: origin }, { label: URLまで送る, value: full } ] }
+              - { name: newTab, label: 新しいタブで開く, widget: boolean }
+          - name: sns
+            label: SNS
+            widget: object
+            fields:
+              - name: items
+                label: SNSリンク
+                widget: list
+                fields:
+                  - { name: service, label: サービス（x / instagram / pixiv など）, widget: string }
+                  - { name: url, label: URL（空欄で非表示）, widget: string, required: false }
+                  - { name: label, label: 表示名（省略可）, widget: string, required: false }
+                  - { name: referrer, label: このリンクだけのリファラー設定, widget: select, options: [none, origin, full], required: false }
+          - name: about
+            label: About
+            widget: object
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: text, label: 本文（段落ごと）, widget: list }
+              - { name: skills, label: スキル, widget: list, fields: [ { name: title, label: 分類, widget: string }, { name: items, label: 項目, widget: list } ] }
+          - name: history
+            label: 経歴
+            widget: object
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: items, label: 項目, widget: list, fields: [ { name: year, label: 年, widget: string }, { name: org, label: 所属, widget: string }, { name: detail, label: 内容, widget: string } ] }
+          - name: gallery
+            label: 作品一覧
+            widget: object
+            fields:
+              - { name: title, label: 見出し, widget: string }
+              - { name: layout, label: 並べ方, widget: select, options: [ { label: テーマの既定, value: "" }, { label: 格子, value: grid }, { label: 段組み, value: masonry } ], required: false }
+              - { name: style, label: 表示形式, widget: select, options: [ { label: テーマの既定, value: "" }, { label: 文字付き, value: card }, { label: 画像のみ, value: image } ], required: false }
+              - { name: homeCount, label: トップに出す件数, widget: number }
+              - { name: filters, label: 絞り込みボタン（空ならタグから自動）, widget: list, required: false }
+          - name: pages
+            label: ページの公開設定
+            widget: object
+            fields:
+              - { name: news, label: 更新履歴, widget: object, fields: [ { name: enabled, label: 公開, widget: boolean }, { name: title, label: 見出し, widget: string }, { name: homeCount, label: トップに出す件数, widget: number } ] }
+              - { name: contact, label: お問い合わせ, widget: object, fields: [ { name: enabled, label: 公開, widget: boolean }, { name: footer, label: フッターにリンク, widget: boolean }, { name: formUrl, label: フォームURL, widget: string, required: false }, { name: email, label: メールアドレス, widget: string, required: false } ] }
+              - { name: commission, label: ご依頼について, widget: object, fields: [ { name: enabled, label: 公開, widget: boolean }, { name: footer, label: フッターにリンク, widget: boolean } ] }
+              - { name: terms, label: 利用規約, widget: object, fields: [ { name: enabled, label: 公開, widget: boolean }, { name: footer, label: フッターにリンク, widget: boolean } ] }
+              - { name: privacy, label: プライバシーポリシー, widget: object, fields: [ { name: enabled, label: 公開, widget: boolean }, { name: footer, label: フッターにリンク, widget: boolean } ] }
+          - name: images
+            label: 画像
+            widget: object
+            fields:
+              - { name: protect, label: 右クリック保存・ドラッグを抑止, widget: boolean }
+          - name: assets
+            label: 画像の配信元
+            widget: object
+            fields:
+              - { name: imageBaseUrl, label: 外部サーバURL（空欄でGitHub）, widget: string, required: false }
+              - { name: imageReferrer, label: 画像取得時のリファラー, widget: select, options: [none, origin, full] }
+              - { name: fallbackImage, label: 読めないときの代替画像, widget: string }
+          - name: analytics
+            label: アクセス解析
+            widget: object
+            fields:
+              - { name: googleAnalyticsId, label: Google アナリティクス測定ID（G-）, widget: string, required: false }

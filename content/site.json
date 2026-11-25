@@ -3,11 +3,13 @@
 
   "site": {
     "title": "h-otk",
-    "copyright": "© 2026 h-otk."
+    "description": "h-otk のポートフォリオサイト",
+    "copyright": "© 2026 h-otk.",
+    "favicon": "assets/img/favicon.svg"
   },
 
   "theme": {
-    "_説明": "name: themes フォルダ内のファイル名(.css を除く)。choices: 閲覧者が切り替えられるテーマ。allowSwitch を false にすると切替メニューを隠します。",
+    "_説明": "name: assets/css/themes フォルダ内のファイル名(.css を除く)。choices: 閲覧者が切り替えられるテーマ。allowSwitch を false にすると切替メニューを隠します。",
     "name": "minimal",
     "allowSwitch": true,
     "choices": [
@@ -17,7 +19,7 @@
       { "name": "material", "label": "マテリアル" }
     ],
     "override": {
-      "_説明": "テーマの一部だけ変えたいときに使う。空欄(\"\")ならテーマの設定のまま。backgroundImage は img/bg/ に置いた画像のパス。",
+      "_説明": "テーマの一部だけ変えたいときに使う。空欄(\"\")ならテーマの設定のまま。backgroundImage は content/images/ に置いた画像のパス。",
       "accent": "",
       "background": "",
       "text": "",
@@ -29,6 +31,8 @@
   "nav": [
     { "label": "Home", "href": "./" },
     { "label": "My Showcase", "href": "works.html" },
+    { "label": "News", "href": "news.html" },
+    { "label": "Contact", "href": "page.html?id=contact" },
     { "label": "Mini Tools", "href": "mini-tools/" }
   ],
 
@@ -56,8 +60,7 @@
       { "service": "instagram", "url": "" },
       { "service": "pixiv", "url": "" },
       { "service": "bluesky", "url": "" },
-      { "service": "youtube", "url": "", "referrer": "origin" },
-      { "service": "mail", "label": "お問い合わせ", "url": "" }
+      { "service": "youtube", "url": "", "referrer": "origin" }
     ]
   },
 
@@ -101,10 +104,37 @@
   },
 
   "gallery": {
-    "_説明": "layout: grid(格子) / masonry(段組み)。style: card(文字付き) / image(画像のみ)。空欄ならテーマの既定。homeCount: トップに並べる作品数(0 で非表示)。",
+    "_説明": "作品は content/works/作品名フォルダ/index.md で管理します。layout: grid(格子) / masonry(段組み)。style: card(文字付き) / image(画像のみ)。空欄ならテーマの既定。homeCount: トップに並べる作品数(0 で非表示)。filters: 絞り込みボタン（空 [] ならタグから自動作成）。",
     "title": "My Showcase",
     "layout": "",
     "style": "",
-    "homeCount": 3
+    "homeCount": 3,
+    "filters": []
+  },
+
+  "pages": {
+    "_説明": "各ページの表示/非表示。enabled を false にするとリンクも消えます。本文は content/pages/○○.md（更新履歴は content/news/ の各ファイル）で編集します。footer: true でページ下部にリンクを出します。",
+    "news": { "enabled": true, "title": "更新履歴", "homeCount": 3 },
+    "contact": { "enabled": true, "footer": true, "formUrl": "", "email": "" },
+    "commission": { "enabled": false, "footer": true },
+    "terms": { "enabled": true, "footer": true },
+    "privacy": { "enabled": true, "footer": true }
+  },
+
+  "images": {
+    "_説明": "protect: true で作品画像の右クリック保存・ドラッグを抑止（完全には防げません。電子透かしとの併用推奨）。",
+    "protect": false
+  },
+
+  "assets": {
+    "_説明": "imageBaseUrl: 作品画像などを自分のサーバから配信する場合の URL（例 https://example.com/portfolio/ 。最後は / ）。サーバ側には content/ 以下と同じフォルダ構成で画像を置きます。空欄なら GitHub から配信。imageReferrer: 画像取得時のリファラー（サーバ側で直リンク防止にリファラーを使うなら origin）。fallbackImage: 画像が読めなかったときの代替画像。",
+    "imageBaseUrl": "",
+    "imageReferrer": "origin",
+    "fallbackImage": "assets/img/fallback.svg"
+  },
+
+  "analytics": {
+    "_説明": "Google アナリティクス 4 の測定 ID（G- で始まる）。空欄なら解析タグは読み込みません。使う場合はプライバシーポリシーへの記載を忘れずに。",
+    "googleAnalyticsId": ""
   }
 }

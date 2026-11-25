@@ -2,8 +2,8 @@
   テーマ: minimal（シンプル・白基調）
   ───────────────────────────────
   新しいテーマを作るときは、このファイルをコピーして名前を変え、
-  config/site.json の "theme" → "name" にファイル名（.css を除く）を書く。
-  変数の一覧と意味は static/style.css の先頭を参照。
+  content/site.json の "theme" → "name" にファイル名（.css を除く）を書く。
+  変数の一覧と意味は assets/css/base.css の先頭を参照。
 */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 

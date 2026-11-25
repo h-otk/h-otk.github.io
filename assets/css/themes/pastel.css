@@ -1,7 +1,7 @@
 /*
   テーマ: pastel（イラストポートフォリオ向け。丸み・パステル・段組みギャラリー）
-  背景画像を使いたいときは --bg-image を url("../img/bg/ファイル名.png") に変える
-  （このファイルから見た相対パス）。config/site.json の override でも指定できる。
+  背景画像を使いたいときは --bg-image を url("../../../content/images/ファイル名.png") に変える
+  （このファイルから見た相対パス）。content/site.json の override でも指定できる。
 */
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap");
 
