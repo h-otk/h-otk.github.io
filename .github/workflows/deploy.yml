@@ -24,6 +24,16 @@ jobs:
         with:
           fetch-depth: 0 # ファイル一覧の「最終更新日時」をコミット履歴から取るため
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Markdown 変換ライブラリをインストール
+        run: pip install markdown==3.11.3 pyyaml==6.0.4
+
+      - name: content/ からサイトデータを生成（作品・固定ページ・更新履歴）
+        run: python3 .github/scripts/build_content.py
+
       - name: mini-tools のファイル一覧ページを生成
         run: python3 .github/scripts/gen_listing.py mini-tools
 

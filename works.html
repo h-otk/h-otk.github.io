@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Showcase — h-otk</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="static/style.css?v=0">
+  <link rel="stylesheet" href="assets/css/base.css?v=0">
   <noscript><style>.is-loading body { opacity: 1; }</style></noscript>
-  <script src="static/versions.js?v=0"></script>
-  <script src="static/site.js?v=0" defer></script>
+  <script src="assets/js/versions.js?v=0"></script>
+  <script src="assets/js/site.js?v=0" defer></script>
 </head>
-<!-- 作品の追加・編集は config/works.json で行います。 -->
+<!-- 中身は content/ のファイルから自動で組み立てられます。文章の変更は content/ 側で行ってください。 -->
 <body data-page="works">
 
   <header class="site-header">
@@ -23,10 +24,8 @@
     <h1 class="page-title">My Showcase</h1>
     <div class="filter-bar" id="filter-bar"></div>
     <div class="works-grid" id="works-grid"></div>
-    <noscript><p>このページの表示には JavaScript が必要です。</p></noscript>
+    <noscript><p>このサイトの表示には JavaScript が必要です。</p></noscript>
   </main>
-
-  <dialog class="lightbox" id="lightbox" aria-label="作品の詳細"></dialog>
 
   <footer></footer>
 

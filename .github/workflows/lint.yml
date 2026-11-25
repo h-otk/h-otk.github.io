@@ -14,17 +14,23 @@ jobs:
         with:
           node-version: '20'
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: 依存パッケージをインストール
         run: npm install --no-save htmlhint@1 stylelint@16 stylelint-config-standard@36 # バージョン固定（新版でルールが変わり結果がぶれるのを防ぐ）
 
       - name: HTMLHint
-        run: npx htmlhint --config .htmlhintrc index.html works.html
+        run: npx htmlhint --config .htmlhintrc *.html
 
       - name: Stylelint
-        run: npx stylelint "static/**/*.css" "themes/**/*.css" --config .stylelintrc.json
+        run: npx stylelint "assets/css/**/*.css" --config .stylelintrc.json
 
       - name: ローカル CSS / JS 参照のリンク切れチェック
         run: python3 .github/scripts/cache_bust.py --check
 
-      - name: 設定ファイル（config/*.json）のチェック
-        run: python3 .github/scripts/validate_config.py
+      - name: コンテンツ（content/ の設定・Markdown）のチェック
+        run: |
+          pip install markdown==3.11.3 pyyaml==6.0.4
+          python3 .github/scripts/build_content.py --check

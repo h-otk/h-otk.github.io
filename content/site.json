@@ -1,0 +1,140 @@
+{
+  "_説明": "サイト全体の設定。\"_\" で始まる項目はメモ欄なので無視されます。文字は必ず \"ダブルクォーテーション\" で囲み、項目の間はカンマ(,)で区切ってください。最後の項目の後ろにはカンマを付けません。",
+
+  "site": {
+    "title": "h-otk",
+    "description": "h-otk のポートフォリオサイト",
+    "copyright": "© 2026 h-otk.",
+    "favicon": "assets/img/favicon.svg"
+  },
+
+  "theme": {
+    "_説明": "name: assets/css/themes フォルダ内のファイル名(.css を除く)。choices: 閲覧者が切り替えられるテーマ。allowSwitch を false にすると切替メニューを隠します。",
+    "name": "minimal",
+    "allowSwitch": true,
+    "choices": [
+      { "name": "minimal", "label": "シンプル" },
+      { "name": "dark", "label": "ダーク" },
+      { "name": "pastel", "label": "パステル" },
+      { "name": "material", "label": "マテリアル" }
+    ],
+    "override": {
+      "_説明": "テーマの一部だけ変えたいときに使う。空欄(\"\")ならテーマの設定のまま。backgroundImage は content/images/ に置いた画像のパス。",
+      "accent": "",
+      "background": "",
+      "text": "",
+      "backgroundImage": "",
+      "font": ""
+    }
+  },
+
+  "nav": [
+    { "label": "Home", "href": "./" },
+    { "label": "My Showcase", "href": "works.html" },
+    { "label": "News", "href": "news.html" },
+    { "label": "Contact", "href": "page.html?id=contact" },
+    { "label": "Mini Tools", "href": "mini-tools/" }
+  ],
+
+  "profile": {
+    "name": "h-otk",
+    "avatar": "",
+    "bio": [
+      "滋賀県在住の20代。",
+      "PCやIT系分野に興味があります。",
+      "書籍や説明書など日本語の本なら何でも読みます。"
+    ]
+  },
+
+  "links": {
+    "_説明": "外部リンク（SNS・作品の関連リンク）全体の設定。referrer: リンク先に「どのページから来たか」を伝えるか。none=送らない / origin=サイトのドメインだけ送る / full=ページのURLまで送る。newTab: true で新しいタブで開く。",
+    "referrer": "none",
+    "newTab": true
+  },
+
+  "sns": {
+    "_説明": "url を空欄(\"\")にしたものは表示されません。service は x / instagram / threads / bluesky / misskey / mastodon / youtube / tiktok / pixiv / booth / skeb / fanbox / note / github / qiita / zenn / linkedin など。表示名を変えたいときは label を書く。個別に referrer を書くとそのリンクだけ設定を変えられます。",
+    "items": [
+      { "service": "github", "url": "https://github.com/h-otk" },
+      { "service": "x", "url": "" },
+      { "service": "instagram", "url": "" },
+      { "service": "pixiv", "url": "" },
+      { "service": "bluesky", "url": "" },
+      { "service": "youtube", "url": "", "referrer": "origin" }
+    ]
+  },
+
+  "about": {
+    "title": "About",
+    "text": [
+      "IT系の職業ではなくエンジニアでもありません。"
+    ],
+    "skills": [
+      {
+        "title": "Languages & Frameworks",
+        "items": [
+          "HTML / CSS(ある程度)",
+          "JavaScript(varの頃から知識update中)",
+          "Python3(基本文法程度)",
+          "Flask(簡単なバックエンドが公開できる程度)",
+          "VBA(理解できる程度)",
+          "GoogleAppsScript(調べながら何とか)"
+        ]
+      },
+      {
+        "title": "Tools",
+        "items": [
+          "VS Code",
+          "GitHub",
+          "SQLite3(簡単なデータベース)",
+          "Postman(RestAPIテスト用)"
+        ]
+      }
+    ]
+  },
+
+  "history": {
+    "title": "My Background",
+    "items": [
+      { "year": "20✗", "org": "滋賀県内の私立中学校", "detail": "入学" },
+      { "year": "20xx", "org": "滋賀県内の私立中学校", "detail": "卒業" },
+      { "year": "20xx", "org": "滋賀県内の私立高校", "detail": "普通科 入学" },
+      { "year": "20xx", "org": "滋賀県内の私立高校", "detail": "普通科　卒業" }
+    ]
+  },
+
+  "gallery": {
+    "_説明": "作品は content/works/作品名フォルダ/index.md で管理します。layout: grid(格子) / masonry(段組み)。style: card(文字付き) / image(画像のみ)。空欄ならテーマの既定。homeCount: トップに並べる作品数(0 で非表示)。filters: 絞り込みボタン（空 [] ならタグから自動作成）。",
+    "title": "My Showcase",
+    "layout": "",
+    "style": "",
+    "homeCount": 3,
+    "filters": []
+  },
+
+  "pages": {
+    "_説明": "各ページの表示/非表示。enabled を false にするとリンクも消えます。本文は content/pages/○○.md（更新履歴は content/news/ の各ファイル）で編集します。footer: true でページ下部にリンクを出します。",
+    "news": { "enabled": true, "title": "更新履歴", "homeCount": 3 },
+    "contact": { "enabled": true, "footer": true, "formUrl": "", "email": "" },
+    "commission": { "enabled": false, "footer": true },
+    "terms": { "enabled": true, "footer": true },
+    "privacy": { "enabled": true, "footer": true }
+  },
+
+  "images": {
+    "_説明": "protect: true で作品画像の右クリック保存・ドラッグを抑止（完全には防げません。電子透かしとの併用推奨）。",
+    "protect": false
+  },
+
+  "assets": {
+    "_説明": "imageBaseUrl: 作品画像などを自分のサーバから配信する場合の URL（例 https://example.com/portfolio/ 。最後は / ）。サーバ側には content/ 以下と同じフォルダ構成で画像を置きます。空欄なら GitHub から配信。imageReferrer: 画像取得時のリファラー（サーバ側で直リンク防止にリファラーを使うなら origin）。fallbackImage: 画像が読めなかったときの代替画像。",
+    "imageBaseUrl": "",
+    "imageReferrer": "origin",
+    "fallbackImage": "assets/img/fallback.svg"
+  },
+
+  "analytics": {
+    "_説明": "Google アナリティクス 4 の測定 ID（G- で始まる）。空欄なら解析タグは読み込みません。使う場合はプライバシーポリシーへの記載を忘れずに。",
+    "googleAnalyticsId": ""
+  }
+}

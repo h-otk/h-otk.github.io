@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>h-otk</title>
   <meta name="google-site-verification" content="5u6kIAX5z88EovOxOQBiKOzhCk3DL9Nc8gfqg3y7vak"><!--Google Search Console用-->
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="static/style.css?v=0">
+  <link rel="stylesheet" href="assets/css/base.css?v=0">
   <noscript><style>.is-loading body { opacity: 1; }</style></noscript>
-  <script src="static/versions.js?v=0"></script>
-  <script src="static/site.js?v=0" defer></script>
+  <script src="assets/js/versions.js?v=0"></script>
+  <script src="assets/js/site.js?v=0" defer></script>
 </head>
-<!-- 中身は config/site.json と config/works.json から自動で組み立てられます。文章の変更は JSON 側で行ってください。 -->
+<!-- 中身は content/ のファイルから自動で組み立てられます。文章の変更は content/ 側で行ってください。 -->
 <body data-page="home">
 
   <header class="site-header">
@@ -28,6 +29,11 @@
       <h2>My Showcase</h2>
       <div class="works-grid" id="works-grid"></div>
       <p class="more-link"><a class="link-arrow" href="works.html">View all →</a></p>
+    </section>
+    <section id="news-section">
+      <h2>News</h2>
+      <ul class="news-list" id="news-list"></ul>
+      <p class="more-link"><a class="link-arrow" href="news.html">View all →</a></p>
     </section>
     <noscript><p>このサイトの表示には JavaScript が必要です。</p></noscript>
   </main>
