@@ -125,6 +125,41 @@
     footer.appendChild(el("label", { class: "theme-switch" }, ["テーマ: ", select]));
   }
 
+  /* ── 外部リンク（SNS など）とリファラー制御 ── */
+  // site.json の "links.referrer" で指定する値 → ブラウザの referrerpolicy
+  const REFERRER = {
+    none: { policy: "no-referrer", rel: "noopener noreferrer" },      // 送らない
+    origin: { policy: "origin", rel: "noopener" },                    // ドメインだけ送る
+    full: { policy: "no-referrer-when-downgrade", rel: "noopener" }   // ページの URL まで送る
+  };
+  const SNS_LABELS = {
+    x: "X", twitter: "X", instagram: "Instagram", threads: "Threads", bluesky: "Bluesky",
+    misskey: "Misskey", mastodon: "Mastodon", youtube: "YouTube", tiktok: "TikTok",
+    pixiv: "pixiv", booth: "BOOTH", skeb: "Skeb", fanbox: "FANBOX", note: "note",
+    github: "GitHub", qiita: "Qiita", zenn: "Zenn", linkedin: "LinkedIn", mail: "Mail"
+  };
+  let linkSettings = { referrer: "none", newTab: true };
+
+  function externalLink(url, text, cls, referrer) {
+    const mode = REFERRER[referrer || linkSettings.referrer] || REFERRER.none;
+    const attrs = { href: url, text: text, class: cls, referrerpolicy: mode.policy, rel: mode.rel };
+    if (linkSettings.newTab !== false && !url.startsWith("mailto:")) attrs.target = "_blank";
+    return el("a", attrs);
+  }
+
+  function renderSns(conf) {
+    // 旧形式（profile.links）にも対応
+    const items = (conf.sns && conf.sns.items) || conf.profile.links || [];
+    const visible = items.filter(function (s) { return s.url; });
+    if (!visible.length) return null;
+    return el("div", { class: "sns-links" }, visible.map(function (s) {
+      const label = s.label || SNS_LABELS[(s.service || "").toLowerCase()] || s.service || s.url;
+      const link = externalLink(s.url, label, "sns-link", s.referrer);
+      if (s.service) link.dataset.service = s.service.toLowerCase();
+      return link;
+    }));
+  }
+
   /* ── トップページ ── */
   function renderHome(conf) {
     const p = conf.profile;
@@ -134,9 +169,7 @@
       if (i) bio.appendChild(el("br"));
       bio.appendChild(document.createTextNode(line));
     });
-    const links = el("div", { class: "sns-links" }, (p.links || []).map(function (l) {
-      return el("a", { href: l.url, text: l.label, target: "_blank", rel: "noopener" });
-    }));
+    const links = renderSns(conf);
     hero.textContent = "";
     if (p.avatar) hero.appendChild(el("img", { class: "hero-avatar", src: p.avatar, alt: p.name }));
     hero.appendChild(el("div", {}, [el("h1", { class: "hero-name", text: p.name }), bio, links]));
@@ -217,7 +250,7 @@
           el("p", { class: "lightbox-date", text: w.date }),
           el("p", { class: "lightbox-desc", text: w.description }),
           el("ul", { class: "work-tags" }, (w.tags || []).map(function (t) { return el("li", { class: "tag", text: t }); })),
-          w.link ? el("a", { class: "lightbox-link", href: w.link, target: "_blank", rel: "noopener", text: "関連リンク →" }) : null
+          w.link ? externalLink(w.link, "関連リンク →", "lightbox-link") : null
         ])
       ]);
       const close = el("button", { class: "lightbox-btn lightbox-close", type: "button", "aria-label": "閉じる", text: "×" });
@@ -310,6 +343,7 @@
 
   Promise.all([getJSON("config/site.json"), getJSON("config/works.json")])
     .then(function ([conf, works]) {
+      if (conf.links) linkSettings = Object.assign(linkSettings, conf.links);
       applyOverride(conf.theme.override);
       const themeName = pickTheme(conf.theme);
       return applyTheme(themeName).then(function () {

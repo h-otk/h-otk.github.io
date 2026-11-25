@@ -50,6 +50,17 @@ def check_site(conf) -> None:
     override = theme.get("override", {})
     check_local_file(rel, override.get("backgroundImage", ""), "theme.override.backgroundImage")
     check_local_file(rel, conf.get("profile", {}).get("avatar", ""), "profile.avatar")
+    referrers = ("none", "origin", "full")
+    if conf.get("links", {}).get("referrer", "none") not in referrers:
+        errors.append(f"{rel}: links.referrer は none / origin / full のどれかにしてください")
+    for i, s in enumerate(conf.get("sns", {}).get("items", []), 1):
+        url = s.get("url", "")
+        if url and not re.match(r"^(https://|mailto:)", url):
+            errors.append(f"{rel}: sns の {i} 番目の url は https:// か mailto: で始めてください -> {url}")
+        if s.get("referrer") and s["referrer"] not in referrers:
+            errors.append(f"{rel}: sns の {i} 番目の referrer は none / origin / full のどれかにしてください")
+        if not s.get("service") and not s.get("label"):
+            errors.append(f"{rel}: sns の {i} 番目に service か label を書いてください")
     g = conf.get("gallery", {})
     if g.get("layout") not in ("", None, "grid", "masonry"):
         errors.append(f"{rel}: gallery.layout は grid か masonry（または空欄）にしてください")

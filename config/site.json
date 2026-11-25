@@ -39,9 +39,25 @@
       "滋賀県在住の20代。",
       "PCやIT系分野に興味があります。",
       "書籍や説明書など日本語の本なら何でも読みます。"
-    ],
-    "links": [
-      { "label": "GitHub", "url": "https://github.com/h-otk" }
+    ]
+  },
+
+  "links": {
+    "_説明": "外部リンク（SNS・作品の関連リンク）全体の設定。referrer: リンク先に「どのページから来たか」を伝えるか。none=送らない / origin=サイトのドメインだけ送る / full=ページのURLまで送る。newTab: true で新しいタブで開く。",
+    "referrer": "none",
+    "newTab": true
+  },
+
+  "sns": {
+    "_説明": "url を空欄(\"\")にしたものは表示されません。service は x / instagram / threads / bluesky / misskey / mastodon / youtube / tiktok / pixiv / booth / skeb / fanbox / note / github / qiita / zenn / linkedin など。表示名を変えたいときは label を書く。個別に referrer を書くとそのリンクだけ設定を変えられます。",
+    "items": [
+      { "service": "github", "url": "https://github.com/h-otk" },
+      { "service": "x", "url": "" },
+      { "service": "instagram", "url": "" },
+      { "service": "pixiv", "url": "" },
+      { "service": "bluesky", "url": "" },
+      { "service": "youtube", "url": "", "referrer": "origin" },
+      { "service": "mail", "label": "お問い合わせ", "url": "" }
     ]
   },
 

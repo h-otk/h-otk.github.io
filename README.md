@@ -53,6 +53,28 @@ https://h-otk.github.io/
 `config/site.json` の `profile`（名前・自己紹介・SNS リンク・アイコン画像）、`about`、`history` を書き換えます。
 アイコン画像は `img/` に置いて `"avatar": "img/icon.png"` のように指定します。
 
+### SNS リンク
+
+`config/site.json` の `"sns"` → `"items"` に URL を書くと、プロフィール欄にリンクが表示されます。
+`url` を空欄 `""` にすると非表示になります。
+
+```json
+{ "service": "x", "url": "https://x.com/あなたのID" },
+{ "service": "instagram", "url": "https://www.instagram.com/あなたのID/" },
+```
+
+### リファラー（どのページから来たか）を送るかどうか
+
+`config/site.json` の `"links"` → `"referrer"` で、外部リンク（SNS・作品の関連リンク）全体の動作を切り替えます。
+
+| 値 | 動作 |
+|----|------|
+| `"none"` | 送らない（既定・おすすめ） |
+| `"origin"` | `https://h-otk.github.io/` のようにドメインだけ送る |
+| `"full"` | ページの URL まで送る |
+
+SNS の項目に `"referrer": "origin"` のように書くと、そのリンクだけ別の設定にできます。
+
 ## 3. 見た目（テーマ）を変える
 
 `config/site.json` の `"theme"` → `"name"` を変えるだけで全体の見た目が切り替わります。
