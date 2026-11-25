@@ -1,0 +1,23 @@
+/*
+  テーマ: minimal（シンプル・白基調）
+  ───────────────────────────────
+  新しいテーマを作るときは、このファイルをコピーして名前を変え、
+  config/site.json の "theme" → "name" にファイル名（.css を除く）を書く。
+  変数の一覧と意味は static/style.css の先頭を参照。
+*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #ffffff;
+  --surface: #f5f5f5;
+  --border: #e8e8e8;
+  --text: #111111;
+  --muted: #888888;
+  --accent: #111111;
+  --on-accent: #ffffff;
+  --font: "Inter", -apple-system, blinkmacsystemfont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --radius: 4px;
+  --radius-sm: 3px;
+  --gallery-layout: grid;
+  --gallery-style: card;
+}

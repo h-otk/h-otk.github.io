@@ -1,99 +1,34 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="is-loading">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Showcase — h-otk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/style.css?v=0">
+  <noscript><style>.is-loading body { opacity: 1; }</style></noscript>
+  <script src="static/versions.js?v=0"></script>
+  <script src="static/site.js?v=0" defer></script>
 </head>
-<body>
+<!-- 作品の追加・編集は config/works.json で行います。 -->
+<body data-page="works">
 
-  <header>
-    <a class="logo" href="/">h-otk</a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="works.html" class="active">My Showcase</a>
-    </nav>
+  <header class="site-header">
+    <a class="logo" href="./">h-otk</a>
+    <nav class="site-nav"></nav>
   </header>
 
   <main>
-
     <h1 class="page-title">My Showcase</h1>
-
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">すべて</button>
-      <button class="filter-btn" data-filter="excel">Excel / VBA</button>
-      <button class="filter-btn" data-filter="python">Python</button>
-      <button class="filter-btn" data-filter="web">Web</button>
-      <button class="filter-btn" data-filter="gas">GAS</button>
-      <button class="filter-btn" data-filter="tool">ツール</button>
-    </div>
-
-    <div class="works-grid">
-      <div class="work-card" data-tags="excel,vba,tool">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">Excel</span><span class="tag">VBA</span></div>
-      </div>
-      <div class="work-card" data-tags="python,tool">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">Python</span><span class="tag">ツール</span></div>
-      </div>
-      <div class="work-card" data-tags="gas,tool">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">GAS</span></div>
-      </div>
-      <div class="work-card" data-tags="web">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">Web</span></div>
-      </div>
-      <div class="work-card" data-tags="python,gas">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">Python</span><span class="tag">GAS</span></div>
-      </div>
-      <div class="work-card" data-tags="excel">
-        <div class="work-image">画像未設定</div>
-        <h3>作品名</h3>
-        <p>作品の説明テキスト</p>
-        <div class="work-tags"><span class="tag">Excel</span></div>
-      </div>
-    </div>
-
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="works-grid" id="works-grid"></div>
+    <noscript><p>このページの表示には JavaScript が必要です。</p></noscript>
   </main>
 
-  <footer>
-    <p>&copy; 2026 h-otk.</p>
-  </footer>
+  <dialog class="lightbox" id="lightbox" aria-label="作品の詳細"></dialog>
 
-  <script>
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.work-card');
-
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        btns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-
-        var f = btn.getAttribute('data-filter');
-        cards.forEach(function(card) {
-          var tags = (card.getAttribute('data-tags') || '').split(',');
-          card.style.display = (f === 'all' || tags.indexOf(f) !== -1) ? '' : 'none';
-        });
-      });
-    });
-  </script>
+  <footer></footer>
 
 </body>
 </html>

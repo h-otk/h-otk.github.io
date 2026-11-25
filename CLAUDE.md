@@ -21,31 +21,49 @@ PR作成時にファイル構成を調査(treeなど適切なコマンド)し変
 
 ```
 .
-├── index.html          # メインページ
-├── works.html          # 成果物一覧
+├── index.html          # トップページ（骨組みのみ。中身は config から生成）
+├── works.html          # 作品一覧（フィルタ・ライトボックス）
+├── config/
+│   ├── site.json       # サイト設定・プロフィール・テーマ指定
+│   └── works.json      # 作品データ
+├── themes/             # テーマ CSS（minimal / dark / pastel / material）。任意個数追加可
 ├── static/
-│   └── style.css       # スタイルシート
-├── mini-tools/         # 単体ツール HTML
+│   ├── style.css       # 共通レイアウト（CSS 変数の既定値）
+│   ├── site.js         # config を読んで描画・テーマ適用
+│   └── versions.js     # キャッシュバスター用ハッシュ表（デプロイ時に自動生成）
+├── img/
+│   ├── works/          # 作品画像
+│   └── bg/             # 背景画像
+├── mini-tools/         # 単体ツール HTML（index.html は gen_listing.py で自動生成）
 ├── robots.txt
 ├── google*.html        # Search Console 所有権確認
 ├── .htmlhintrc / .stylelintrc.json  # リンター設定
 ├── CLAUDE.md           # このファイル
-├── README.md
+├── README.md           # 編集ガイド（非プログラマ向け）
 └── .github/
     ├── ISSUE_TEMPLATE/ # Issue テンプレート
     ├── PULL_REQUEST_TEMPLATE.md
     ├── scripts/
-    │   └── cache_bust.py  # CSS/JS キャッシュバスター & 参照チェック
+    │   ├── cache_bust.py      # キャッシュバスター & 参照チェック
+    │   ├── gen_listing.py     # Apache 風ファイル一覧の生成
+    │   └── validate_config.py # config/*.json の検証
     └── workflows/
-        ├── deploy.yml     # キャッシュバスター付与 → Pages デプロイ
-        ├── lint.yml       # HTMLHint / Stylelint / 参照切れチェック
+        ├── deploy.yml     # 一覧生成 → キャッシュバスター → Pages デプロイ
+        ├── lint.yml       # HTMLHint / Stylelint / 参照切れ / config 検証
         └── compress.yml   # 画像圧縮
 ```
 
 ### キャッシュバスター
 
 - HTML 内では `?v=0` のままでよい（デプロイ時に `?v=<ファイル内容ハッシュ>` へ自動置換）
-- 対象はローカルの CSS / JS のみ（HTML・画像・外部 URL は対象外）
+- 対象はローカルの CSS / JS / 設定 JSON（HTML・画像・外部 URL は対象外）
+- JS から動的に読む `themes/`・`config/` は `static/versions.js` のハッシュ表で対応
+
+### テーマ・設定の仕組み
+
+- 見た目は CSS 変数で定義。共通の既定値は `static/style.css` の `:root`、各テーマは `themes/*.css` で上書き
+- ギャラリーの並べ方の既定はテーマ側の `--gallery-layout` / `--gallery-style`、`config/site.json` の `gallery` が優先
+- 表示テーマの優先順位: URL `?theme=` > 閲覧者の選択（localStorage）> `site.json` の `theme.name`
 
 ## Git 操作の定義
 
