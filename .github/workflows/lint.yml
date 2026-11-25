@@ -21,4 +21,7 @@ jobs:
         run: npx htmlhint --config .htmlhintrc index.html works.html
 
       - name: Stylelint
-        run: npx stylelint style.css --config .stylelintrc.json
+        run: npx stylelint "static/**/*.css" --config .stylelintrc.json
+
+      - name: ローカル CSS / JS 参照のリンク切れチェック
+        run: python3 .github/scripts/cache_bust.py --check

@@ -22,10 +22,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: キャッシュバスター（CSS クエリ文字列を SHA に更新）
-        run: |
-          SHA=$(git rev-parse --short HEAD)
-          sed -i "s|style\.css?v=[^\"']*|style.css?v=${SHA}|g" *.html
+      - name: キャッシュバスター（ローカル CSS / JS に ?v=内容ハッシュ を付与）
+        run: python3 .github/scripts/cache_bust.py
 
       - uses: actions/configure-pages@v5
 

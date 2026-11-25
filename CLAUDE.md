@@ -22,12 +22,30 @@ PR作成時にファイル構成を調査(treeなど適切なコマンド)し変
 ```
 .
 ├── index.html          # メインページ
-├── style.css           # スタイルシート
+├── works.html          # 成果物一覧
+├── static/
+│   └── style.css       # スタイルシート
+├── mini-tools/         # 単体ツール HTML
+├── robots.txt
+├── google*.html        # Search Console 所有権確認
+├── .htmlhintrc / .stylelintrc.json  # リンター設定
 ├── CLAUDE.md           # このファイル
+├── README.md
 └── .github/
     ├── ISSUE_TEMPLATE/ # Issue テンプレート
-    └── PULL_REQUEST_TEMPLATE.md
+    ├── PULL_REQUEST_TEMPLATE.md
+    ├── scripts/
+    │   └── cache_bust.py  # CSS/JS キャッシュバスター & 参照チェック
+    └── workflows/
+        ├── deploy.yml     # キャッシュバスター付与 → Pages デプロイ
+        ├── lint.yml       # HTMLHint / Stylelint / 参照切れチェック
+        └── compress.yml   # 画像圧縮
 ```
+
+### キャッシュバスター
+
+- HTML 内では `?v=0` のままでよい（デプロイ時に `?v=<ファイル内容ハッシュ>` へ自動置換）
+- 対象はローカルの CSS / JS のみ（HTML・画像・外部 URL は対象外）
 
 ## Git 操作の定義
 

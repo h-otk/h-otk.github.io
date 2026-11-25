@@ -1,0 +1,65 @@
+"""HTML 内のローカル CSS / JS 参照にキャッシュバスターを付与する。
+
+使い方:
+  python3 .github/scripts/cache_bust.py          # ?v=<ファイル内容のハッシュ> に書き換え
+  python3 .github/scripts/cache_bust.py --check  # 参照先ファイルの存在確認のみ（書き換えなし）
+
+HTML と画像は対象外。外部 URL（http:// / https:// / //）も対象外。
+"""
+
+import hashlib
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+EXCLUDE_DIRS = {".git", "node_modules"}
+
+# href="xxx.css" / src="xxx.js"（?v=... の有無を問わない）
+PATTERN = re.compile(
+    r"""(?P<attr>\b(?:href|src)=)(?P<q>["'])(?P<path>[^"'?#]+\.(?:css|js))(?:\?[^"'#]*)?(?P<end>["'])"""
+)
+
+
+def resolve(html_file: Path, ref: str) -> Path | None:
+    if ref.startswith(("http://", "https://", "//", "data:")):
+        return None
+    if ref.startswith("/"):
+        return ROOT / ref.lstrip("/")
+    return (html_file.parent / ref).resolve()
+
+
+def file_hash(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:8]
+
+
+def main() -> int:
+    check_only = "--check" in sys.argv
+    errors = []
+
+    for html_file in sorted(ROOT.rglob("*.html")):
+        if EXCLUDE_DIRS & set(html_file.relative_to(ROOT).parts):
+            continue
+        text = html_file.read_text(encoding="utf-8")
+
+        def replace(m: re.Match) -> str:
+            target = resolve(html_file, m.group("path"))
+            if target is None:
+                return m.group(0)
+            if not target.is_file():
+                errors.append(f"{html_file.relative_to(ROOT)}: 参照先が存在しません -> {m.group('path')}")
+                return m.group(0)
+            return f"{m.group('attr')}{m.group('q')}{m.group('path')}?v={file_hash(target)}{m.group('end')}"
+
+        new_text = PATTERN.sub(replace, text)
+        if not check_only and new_text != text:
+            html_file.write_text(new_text, encoding="utf-8")
+            print(f"更新: {html_file.relative_to(ROOT)}")
+
+    for e in errors:
+        print(f"::error::{e}")
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
